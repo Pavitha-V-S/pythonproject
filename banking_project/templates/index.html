@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Banking Website{% endblock %}
+
+{% block content %}
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="#">Login</a></li>
+            <li><a href="{% url 'register' %}">Register</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Branches</a>
+                <div class="dropdown-content">
+                    <a href="{% url 'wikipedia' district='District1' %}">District 1</a>
+                    <a href="{% url 'wikipedia' district='District2' %}">District 2</a>
+                    <a href="{% url 'wikipedia' district='District3' %}">District 3</a>
+                    <!-- Add more district links as needed -->
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <button id="showFormButton">Open Application Form</button>
+
+    <div id="userDetailsForm" style="display: none;">
+        <form method="post" action="{% url 'application_form' %}">
+            {% csrf_token %}
+            <!-- ... (form fields from form.html) ... -->
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div id="successMessage" style="display: none;">
+        <p>Application accepted!</p>
+        <p><a href="{% url 'home' %}">Return to Home</a></p>
+    </div>
+
+    <script>
+        // JavaScript to show/hide user details form
+        document.getElementById('showFormButton').addEventListener('click', function() {
+            document.getElementById('userDetailsForm').style.display = 'block';
+        });
+
+        // JavaScript to show success message and hide form after submission
+        document.getElementById('userDetailsForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            document.getElementById('userDetailsForm').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Login</h2>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+        <input type="submit" value="Login">
+    </form>
+
+    <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+
+    {% if error_message %}
+    <p class="error-message">{{ error_message }}</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+    <script>
+        const registerLink = document.getElementById('registerLink');
+        const registerFormContainer = document.querySelector('.register-form-container');
+
+        registerLink.addEventListener('click', function() {
+            registerFormContainer.style.display = 'block';
+        });
+    </script>
+
+
+

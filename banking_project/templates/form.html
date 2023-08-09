@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}User Profile Form{% endblock %}
+
+{% block content %}
+<h2>User Profile Form</h2>
+
+<form id="userDetailsForm" method="post">
+    {% csrf_token %}
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name"><br>
+
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" name="dob"><br>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age"><br>
+
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender">
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+    </select><br>
+
+    <label for="phone_number">Phone Number:</label>
+    <input type="tel" id="phone_number" name="phone_number"><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br>
+
+    <label for="address">Address:</label>
+    <textarea id="address" name="address"></textarea><br>
+
+    <label for="district">District:</label>
+    <select name="district" id="district" required>
+      <option value="">Select District</option>
+      {% for district in districts %}
+      <option value="{{ district }}">{{ district }}</option>
+      {% endfor %}
+    </select><br>
+
+    <label for="branch">Branch:</label>
+    <select id="branch" name="branch">
+        {% for branch in branches %}
+    <option value="{{ branch.pk }}">{{ branch.name }}</option>
+    {% endfor %}
+        <!-- Options will be populated dynamically based on selected district using JavaScript -->
+    </select><br>
+
+    <label for="account_type">Account Type:</label>
+    <select id="account_type" name="account_type">
+        <option value="Savings">Savings Account</option>
+        <option value="Current">Current Account</option>
+        <!-- Add more account type options as needed -->
+    </select><br>
+
+    <label>Materials Provided:</label><br>
+    <input type="checkbox" id="debit_card" name="materials" value="Debit Card">
+    <label for="debit_card">Debit Card</label><br>
+    <input type="checkbox" id="credit_card" name="materials" value="Credit Card">
+    <label for="credit_card">Credit Card</label><br>
+    <input type="checkbox" id="cheque_book" name="materials" value="Cheque Book">
+    <label for="cheque_book">Cheque Book</label><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+ {% if success %}
+    <p>Application accepted. Thank you!</p>
+    <a href="{% url 'home' %}">Return to Home</a>
+  {% endif %}
+<script>
+    // JavaScript to dynamically populate branch dropdown based on selected district
+    document.getElementById('district').addEventListener('change', function() {
+        const selectedDistrict = this.value;
+        const branchDropdown = document.getElementById('branch');
+
+        // Clear existing options
+        branchDropdown.innerHTML = '';
+
+        // Populate branch options based on selected district
+        if (selectedDistrict === 'District1') {
+            branchDropdown.innerHTML = '<option value="Branch1">{{ branch.name }}</option><option value="Branch2">{{ branch.name }}</option>';
+        } else if (selectedDistrict === 'District2') {
+            branchDropdown.innerHTML = '<option value="Branch3">{{ branch.name }}</option><option value="Branch4">{{ branch.name }}</option>';
+        } else if (selectedDistrict === 'District3') {
+            branchDropdown.innerHTML = '<option value="Branch5">{{ branch.name }}</option><option value="Branch6">{{ branch.name }}</option>';
+        }
+    });
+
+
+    // Show success message and return link after form submission
+    document.getElementById('userDetailsForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        document.getElementById('userDetailsForm').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
+    });
+</script>
+{% endblock %}

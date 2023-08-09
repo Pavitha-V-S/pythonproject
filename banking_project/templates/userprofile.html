@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+    <h2>Welcome, {{ user.username }}!</h2>
+
+    <!-- Display user's basic information -->
+    <p>Name: {{ user_profile.name }}</p>
+    <p>DOB: {{ user_profile.dob }}</p>
+    <p>Age: {{ user_profile.age }}</p>
+    <p>Gender: {{ user_profile.gender }}</p>
+    <p>Phone Number: {{ user_profile.phone_number }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Address: {{ user_profile.address }}</p>
+
+    <!-- Display selected materials provided -->
+    <div id="materialsMessage" style="display: none;">
+        {% if selected_materials %}
+            <p>Materials Provided: {{ selected_materials|join:", " }}</p>
+        {% endif %}
+    </div>
+
+    <p><a href="{% url 'home' %}">Return to Home</a></p>
+
+    <script>
+        // JavaScript to show the materials provided message
+        {% if selected_materials %}
+        document.addEventListener('DOMContentLoaded', function() {
+            const materialsMessage = document.getElementById('materialsMessage');
+            materialsMessage.style.display = 'block';
+        });
+        {% endif %}
+    </script>
+{% endblock %}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Districts and Branches</title>
+</head>
+<body>
+    <h1>Districts and Branches</h1>
+
+    <h2>Districts</h2>
+    <ul>
+        {% for district in districts %}
+        <li>{{ district.name }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Branches</h2>
+    <ul>
+        {% for branch in branches %}
+        <li>{{ branch.name }} - {{ branch.district }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

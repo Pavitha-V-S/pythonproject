@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'register' %}">Register</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Branches</a>
+                <div class="dropdown-content">
+                    <a href="{% url 'wikipedia' district='District1' %}">District 1</a>
+                    <a href="{% url 'wikipedia' district='District2' %}">District 2</a>
+                    <a href="{% url 'wikipedia' district='District3' %}">District 3</a>
+                    <!-- Add more district links as needed -->
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <h1>Welcome to Our Banking Website</h1>
+
+    <p>This is the homepage of our banking website. You can explore various features by using the navigation bar above.</p>
+
+    <a href="{% url 'login' %}" class="button">Login</a>
+{% endblock %}
